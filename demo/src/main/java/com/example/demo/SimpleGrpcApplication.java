@@ -17,4 +17,13 @@ public class SimpleGrpcApplication extends GreetServiceImplBase {
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }
+    @Override
+    public void streamHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {
+        // use stream api to send 'Hello ' + name with number of sent
+        for (int i = 0; i < 10; i++) {
+            var res = HelloReply.newBuilder().setMessage("Hello " + request.getName() + ": " + i).build();
+            responseObserver.onNext(res);
+        }
+        responseObserver.onCompleted();
+    }
 }
